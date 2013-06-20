@@ -69,8 +69,8 @@ func ApsPayload(payload string) ([]byte, error) {
 
 	p := map[string] interface{} {
 	    "aps": tree {
-		"Payload": payload,
-		"Badge": 1,
+		Payload: payload,
+		Badge: 1,
 	    },
 	}
 

@@ -62,7 +62,7 @@ func NotificationFailureFromBytes(resp *bytes.Buffer) NotificationFailure {
 
 func ApsPayload(payload string) ([]byte, error) {
 	type tree struct {
-	    Payload string `json:"payload"`
+	    Payload string `json:"alert"`
 	    Badge int `json:"badge"`
 	    Sound string `json:"sound"`
 	}

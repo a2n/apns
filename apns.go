@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"net"
 	"time"
+	"log"
 )
 
 type Notification struct {
@@ -60,9 +61,24 @@ func NotificationFailureFromBytes(resp *bytes.Buffer) NotificationFailure {
 }
 
 func ApsPayload(payload string) ([]byte, error) {
-	type tree map[string]interface{}
-	jsonPayload := tree{"aps": tree{"alert": payload}}
-	return json.Marshal(jsonPayload)
+	type tree struct {
+	    Payload string `json:"payload"`
+	    Badge int `json:"badge"`
+	    Sound string `json:"sound"`
+	}
+
+	p := map[string] interface{} {
+	    "aps": tree {
+		"Payload": payload,
+		"Badge": 1,
+	    },
+	}
+
+	b, err := json.Marshal(p)
+	if err != nil {
+	    log.Printf("json marshal failed, %s\n", err.Error())
+	}
+	return b, err
 }
 
 func ResetAfter(identifier uint32, queue []NotificationAndPayload) []NotificationAndPayload {
